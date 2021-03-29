@@ -280,7 +280,7 @@ output delay: {'no' if not delayed else str(num_lines)+' latest lines every '+st
         utils.copy_requirements(run)
         help_flag = any([e in sys.argv for e in ('-h','--help')])
         if delayed:
-            print(f"(showing last line every {delay} seconds)",flush=True)
+            print(f"(showing last {num_lines} line(s) every {delay} seconds)",flush=True)
             command_list = [command for command,output in list(iterate_commands_and_outputs(run))]
             serial_proc = LeashedProcess(command_list,working_dir=run['dir'],delay=delay,lines=num_lines)
             while not CTRL_C and serial_proc.isrunning():
@@ -303,5 +303,3 @@ output delay: {'no' if not delayed else str(num_lines)+' latest lines every '+st
 from . import targets
 current_module = sys.modules[__name__]
 targets.addtarget('local',current_module)
-
-#TODO from pathlib import Path, PureWindowsPath # for x-platform support of slashes

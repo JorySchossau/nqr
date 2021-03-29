@@ -1,11 +1,4 @@
 import os, sys
-## TODO this is a hack to get relative imports working
-##      until we can make this a proper installable module
-#import os, sys
-#PACKAGE_PARENT = '../../..'
-#SCRIPT_DIR = os.path.dirname(os.path.realpath(os.path.join(os.getcwd(), os.path.expanduser(__file__))))
-#sys.path.append(os.path.normpath(os.path.join(SCRIPT_DIR, PACKAGE_PARENT)))
-## END HACK
 from types import SimpleNamespace
 from typing import List, Optional
 from parsimonious.grammar import Grammar
@@ -206,13 +199,10 @@ def print_help():
 if os.getenv("DEBUG",False):
     logging.basicConfig()
     logger.root.setLevel(logging.DEBUG)
-# TODO help
-#scriptdir = os.path.split(os.path.realpath(__file__))[0]
 scriptdir = os.getcwd()
 mabepath = find_mabe_exe_at_path(scriptdir)
 mabehelp = get_mabe_help(mabepath)
 mabesettings = get_mabe_exe_settings(mabepath)
-# TODO get mabe .cfg settings?
 use_help_to_remove_mabe_header(mabehelp, mabesettings)
 sections = get_config_sections(mabesettings)
 # create mabe namespace for all parameters
@@ -249,7 +239,7 @@ def Runs(*args,**kwargs):
 
 def arg_transform(name:str, value:str) -> str:
     name = name.replace(".","-")
-    return f" -p {name} {value}"
+    return f"{name} {value}"
 set_arg_transform(arg_transform)
 
 ###########################

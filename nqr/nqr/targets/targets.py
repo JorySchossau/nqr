@@ -85,7 +85,7 @@ def print_help():
 def launch(run):
     help_flag = any([e in sys.argv for e in ('-h','--help')])
     _validate_targets_exist()
-    if not any([f"--{target_name}" in sys.argv for target_name,_ in targets()]) and not help_flag:
+    if not any([f"--{target_name}" in sys.argv for target_name,_ in targets()]) and not help_flag and len(sys.argv) > 1:
         print("Error: No targets specified")
         print(f"Valid targets are: {', '.join([target_name for target_name,_ in targets()])}")
         sys.exit(1)

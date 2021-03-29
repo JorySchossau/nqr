@@ -202,6 +202,10 @@ def validate_varying_labels():
     #  * labels contain invalid filename characters
     #  * if no labels defined, values as str contain invalid filename characters
     global _groups
+    def stripIllegalDirnameChars(rawString):
+        for eachChar in list(':[](),\'"\\!@#$%^&*=+` <>?{}'):
+            rawString = rawString.replace(eachChar,'')
+        return rawString
     VALID_CHARS = r'[a-zA-Z0-9\.=\-+_@\']+$'
     VALID_FILENAME_PATTERN = re.compile(VALID_CHARS)
     for group_name,group in _groups.items():
@@ -217,22 +221,11 @@ def validate_varying_labels():
        valid chars follow the regex pattern
        {VALID_CHARS}""")
             else:
-                # check values
+                # auto-convert values to valid dir chars
+                labels = list()
                 for value in varying.values:
-                    if not VALID_FILENAME_PATTERN.match(str(value)):
-                        raise ValueError(f"""Error: invalid filename chars in value
-       group    '{group.name}'
-       variable '{variable}'
-       value    '{value}'
-
-       valid chars follow the regex pattern
-       {VALID_CHARS}"
-
-       To fix this, please add a labels list
-       to this Vary instance, using valid characters.
-       ex: Vary(g.val, [[1,2],[3,4]], labels=[\"1-2\",\"3-4\"])
-                        ^   ^ ^   ^           ^     ^
-                          invalid              valid""")
+                    labels.append(stripIllegalDirnameChars(str(value)))
+                varying.labels = labels
 
 user_arg_transform = None
 
@@ -460,7 +453,11 @@ class Requirement():
             destination = os.path.relpath(destination,cwd)
         # check make sure the file/dir exists
         if not os.path.isfile(path) and not os.path.isdir(path):
-            raise FileNotFoundError(1, f"Error: requires() dir or file not found", path)
+            # check if it's a windows exe extension the user didn't put
+            if not os.path.isfile(path+'.exe'):
+                raise FileNotFoundError(1, f"Error: requires() dir or file not found", path)
+            else:
+                path += '.exe'
         self.path = path
         if destination is not None:
             self.destination = destination
