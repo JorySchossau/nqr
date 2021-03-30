@@ -1,9 +1,11 @@
 
 ## nqr
 **nqr** is an enqueuer for pleasantly parallel computation of variation and replication.
-In other words, it uses simple language and native python mechanisms to help deploy experiments, so you can spend more time doing science and less time writing and managing pipelines. However, nqr does not have any mechanism to check on your jobs and know when they are done, as such it has an "enqueue and forget" philosophy.
+In other words, it uses simple language and native python mechanisms ~like autocomplete~* to help deploy experiments, so you can spend more time doing science and less time writing and managing pipelines. However, nqr does not have any mechanism to check on your jobs and know when they are done, as such it has an "enqueue and forget" philosophy.
 
 nqr creates a unique directory for each run and all required files and output files are there, but what that actually looks like depends on the backend target to which you submit the jobs.
+
+*turns out SimpleNamespace doesn't support autocomplete, but Prodict does, so I'll engineer the replacement
 
 ## How to Use
 
