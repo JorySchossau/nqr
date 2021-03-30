@@ -44,6 +44,9 @@ Resulting under-the-hood command for 19th replicate of the 1st condition:
 ```sh
 results/analysis_C0_g.dataChunk=04/19/ $> python analysis.py data.csv -r 19 --dataChunk='[0, 4]'
 ```
+
+Not right for your workflow? It was designed to allow customization to suit any situation. See Features.
+
 ## Installation
 This is not yet on pipy, but will be when it exits beta. Until then, install as a local package.
 ```bash
