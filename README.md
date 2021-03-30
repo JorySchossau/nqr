@@ -39,6 +39,11 @@ for run in g.Runs():
     # modify any information in run:dict as needed before launch
     # or skip certain conditions or replicates if you need
 ```
+
+Resulting under-the-hood command for 19th replicate of the 1st condition:
+```sh
+results/analysis_C0_g.dataChunk=04/19/ $> python analysis.py data.csv -r 19 --dataChunk='[0, 4]'
+```
 ## Installation
 This is not yet on pipy, but will be when it exits beta. Until then, install as a local package.
 ```bash
