@@ -9,6 +9,7 @@ nqr creates a unique directory for each run and all required files and output fi
 
 ## How to Use
 Suppose you are performing a stochastic analysis on various chunks of data, and aggregating statistics on this method.
+
 **1)** Create a variable with any default value
 ```python
 g.dataChunk = 0
