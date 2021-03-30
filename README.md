@@ -11,13 +11,13 @@ nqr creates a unique directory for each run and all required files and output fi
 
 **1)** Create a variable with any default value
 ```python
-g.sleepTime = 0
+g.dataChunk = 0
 ```
 
 **2)** List the variations for any subset of variables
 ```python
-with Group("sleeptest"):
-    Vary(g.allowedTime, list(range(0,20,5)))
+with Group("analysis"):
+    Vary(g.dataChunk, list(range(0,20,5)))
 ```
 **3)** Set the replication power
 
