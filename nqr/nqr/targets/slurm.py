@@ -105,7 +105,7 @@ def print_help():
 
     (no flags)  Normal submission
     -i          Indefinite mode (4hr chunks w/ checkpointing until done)
-    -lN         When -i, limit indefinite mode to N 4hr chunks
+    -sN         When -i, limit indefinite mode to N 4hr chunks
 
     """
     print(help_output)
@@ -115,18 +115,18 @@ def _determine_indefinite_mode() -> bool:
     return indefinite
 
 def _determine_indefinite_repeats() -> Tuple[bool, int]:
-    limited = any([e.startswith('-l') for e in sys.argv])
+    limited = any([e.startswith('-s') for e in sys.argv])
     repeats = None
     if limited:
         for arg in sys.argv:
-            if arg.startswith('-l'):
+            if arg.startswith('-s'):
                 if len(arg) > 2:
                     try:
                         repeats = int(arg[2:])
                         if repeats <= 0:
                             raise ValueError()
                     except ValueError:
-                        print("\nError: -lN (N should be positive int)")
+                        print("\nError: -sN (N should be positive int)")
                         sys.exit(1)
                 break
     return limited, repeats

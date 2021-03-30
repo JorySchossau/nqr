@@ -353,45 +353,49 @@ def Runs(priority=REPS, arg_transform=None):
     #TODO add rep-first or group-first
     groups_iterations = list()
     all_runs = list(_iterate_all_runs(arg_transform=arg_transform, priority=priority))
-    if help_flag:
-        global _printed_help
-        if _printed_help:
-            # end generator
+    while True:
+        if help_flag:
+            global _printed_help
+            if _printed_help:
+                # end generator
+                return
+            print_help()
+            yield all_runs[0] # allow downstream to print
             return
-        print_help()
-        yield all_runs[0] # allow downstream to print
-    if dry_run:
-        global dry_run_already_called
-        print("Dry-Run Report")
-        print()
-        print("Jobs")
-        print(f"{len(all_runs)} total submission(s) from")
-        print(f"{count_conditions()} condition(s)")
-        print(f"{count_reps()} replicate(S) each condition")
-        print()
-        print("Directories")
-        reps_range_str = "{"+f"{_reps_list_str[0]}..{_reps_list_str[-1]}"+"}"
-        directories = sorted(list(set(os.path.join('results',run['condition'],reps_range_str) for run in all_runs)))
-        for directory in directories:
-            print(directory)
-        if 'dry_run_already_called' in locals():
-            del dry_run_already_called
-            return
-        else:
-            dry_run_already_called = True
-            yield all_runs[0]
-    if len(user_commands) == 0:
-        raise ValueError("""Error: no commands set
-       use namespace.addcommand(...)""")
+        if dry_run:
+            global dry_run_already_called
+            print("Dry-Run Report")
+            print()
+            print("Jobs")
+            print(f"{len(all_runs)} total submission(s) from")
+            print(f"{count_conditions()} condition(s)")
+            print(f"{count_reps()} replicate(S) each condition")
+            print()
+            print("Directories")
+            reps_range_str = "{"+f"{_reps_list_str[0]}..{_reps_list_str[-1]}"+"}"
+            directories = sorted(list(set(os.path.join('results',run['condition'],reps_range_str) for run in all_runs)))
+            for directory in directories:
+                print(directory)
+            if 'dry_run_already_called' in locals():
+                del dry_run_already_called
+                return
+            else:
+                dry_run_already_called = True
+                yield all_runs[0]
+                return
+        if len(user_commands) == 0:
+            raise ValueError("""Error: no commands set
+           use namespace.addcommand(...)""")
 
-    if not dry_run:
-        last_run_i = len(all_runs)-1
-        znum = len(str(len(all_runs)))
-        for run_i,run in enumerate(all_runs):
-            run['id'] = str(run_i).zfill(znum)
-            if run_i == last_run_i:
-                run['last_run'] = '1'
-            yield run
+        if not dry_run:
+            last_run_i = len(all_runs)-1
+            znum = len(str(len(all_runs)))
+            for run_i,run in enumerate(all_runs):
+                run['id'] = str(run_i).zfill(znum)
+                if run_i == last_run_i:
+                    run['last_run'] = '1'
+                yield run
+        return
 
 user_commands = list()
 def addcommand(exe:str, template:str="{exe}", output:List[str]=list()):
