@@ -70,7 +70,7 @@ g.setreps(32) # alt: setreps(range(101,110))
 g.requires('mabe')
 g.requires('analysis.py')
 
-g.addcommand(exe='module load pytorch python') # cluster command
+g.addcommand(exe='module load pytorch python') # a supercomputer command
 g.addcommand(exe='mabe',template='{exe} -p GLOBAL-randomSeed {rep} {parameters}')
 g.addcommand(exe='python analysis.py results.csv',template='{exe} -r {rep} {parameters}')
 
