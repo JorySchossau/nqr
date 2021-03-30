@@ -18,7 +18,7 @@ g.dataChunk = 0
 **2)** List the variations for any subset of variables
 ```python
 with Group("analysis"):
-    Vary(g.dataChunk, list(range(0,20,5)))
+    Vary(g.dataChunk, [[0,4],[5,9],[10,14]]))
 ```
 **3)** Set the replication power
 
