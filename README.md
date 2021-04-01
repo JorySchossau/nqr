@@ -4,7 +4,7 @@
 In other words, it helps deploy experiments, so you can spend more time doing science and less time writing and managing pipelines.
 
 nqr allows you to easily describe in python the following kind of computational pipeline:
-> Run my program with all combinations of parameter A, B, and C, with 100 replicates each, storing each version in a unique directory for posterity. After each one, run this these analyses. Do this on my local computer with only a couple replicates so I can make sure it works. Now do the same thing at scale on a supercomputer with all jobs run in parallel.
+> Run my program with all combinations of parameter A, B, and C, with 100 replicates each, storing each version in a unique directory for posterity. After each one, run these analyses. Do this on my local computer with only a couple replicates so I can make sure it works. Now do the same thing at scale on a supercomputer with all jobs run in parallel.
 
 
 nqr creates a unique directory for each run and all required files and output files are there, but what that actually looks like depends on the backend target to which you submit the jobs.
